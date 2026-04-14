@@ -19,7 +19,7 @@ The dashboard renders separate panels for each metric (PR counts, lines changed,
 python3 velocity/refresh.py --repo owner/repo                     # single repo
 python3 velocity/refresh.py --repo org/a --repo org/b             # multiple repos
 python3 velocity/refresh.py --repo org/a --repo org/b --days 14   # different time window
-# open output/dashboard.html in any browser — no server needed
+python3 velocity/refresh.py --repo org/a --open                   # generate and open in browser
 ```
 
 ### Options
@@ -29,6 +29,7 @@ python3 velocity/refresh.py --repo org/a --repo org/b --days 14   # different ti
 | `--repo` | GitHub repo in `owner/repo` format (required, repeatable) |
 | `--days` | Time window in days (default: `42`) |
 | `--output` | Output file path (default: `output/dashboard.html`) |
+| `--open` | Open dashboard in browser after generating |
 
 The output is a self-contained HTML file with all data inlined. Open it directly in any browser, email it, or drop it in Slack — no server required.
 
