@@ -264,6 +264,11 @@ def main() -> None:
     )
     parser.add_argument("--days", type=int, default=42)
     parser.add_argument(
+        "--open",
+        action="store_true",
+        help="Open dashboard in browser after generating",
+    )
+    parser.add_argument(
         "--output",
         default="output/dashboard.html",
         help="Output file path (default: output/dashboard.html)",
@@ -357,6 +362,11 @@ def main() -> None:
     )
 
     print_rate_limit("after")
+
+    if args.open:
+        import webbrowser
+
+        webbrowser.open(Path(args.output).resolve().as_uri())
 
 
 if __name__ == "__main__":
