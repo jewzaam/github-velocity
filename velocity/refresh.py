@@ -23,6 +23,8 @@ def print_rate_limit(label: str) -> None:
             ["gh", "api", "rate_limit"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
         )
         if r.returncode != 0:
             return
@@ -43,7 +45,13 @@ def print_rate_limit(label: str) -> None:
 def run_gh(args: list[str]) -> list[dict]:
     """Run gh CLI command, return parsed JSON."""
     try:
-        r = subprocess.run(["gh"] + args, capture_output=True, text=True)
+        r = subprocess.run(
+            ["gh"] + args,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
     except FileNotFoundError:
         print(
             "ERROR: gh CLI not found." " Install from https://cli.github.com/",
@@ -152,6 +160,8 @@ def enrich_pr(repo: str, pr_number: int) -> dict:
             ],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
         )
     except FileNotFoundError:
         return {"commits": [], "reviews": []}
@@ -319,7 +329,7 @@ def main() -> None:
     # Read index.html template and inline the data
     template_path = Path(os.path.dirname(os.path.abspath(__file__))) / "index.html"
     try:
-        template = template_path.read_text()
+        template = template_path.read_text(encoding="utf-8")
     except OSError as e:
         print(
             f"ERROR: Cannot read {template_path}: {e}",
@@ -345,7 +355,7 @@ def main() -> None:
 
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     try:
-        with open(args.output, "w") as f:
+        with open(args.output, "w", encoding="utf-8") as f:
             f.write(output_html)
     except OSError as e:
         print(
